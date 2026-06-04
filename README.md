@@ -1,7 +1,7 @@
 # API de Gestão Acadêmica - Spring Boot
 
 **Instituição:** IBMEC  
-**Disciplina:** Técnicas Avançadas de Programação (IBM3120)
+**Disciplina:** Técnicas Avançadas de Programação (IBM3120)  
 **Semestre:** 1º Semestre de 2026  
 **Professor:** Thiago Souza  
 **Aluno:** Lucas Alves Castela Pereira  
