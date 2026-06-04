@@ -1,5 +1,7 @@
-package com.example.demo;
+package com.example.demo.Curso;
 
+import com.example.demo.CrudDao;
+import com.example.demo.DaoFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,7 +28,6 @@ public class CursoController {
             @RequestParam String nomeCurso,
             @RequestParam Integer idCurso) {
 
-        // Usamos o padrão Builder do Lombok para montar o objeto
         Curso curso = Curso.builder()
                 .nomeCurso(nomeCurso)
                 .idCurso(idCurso)
@@ -53,7 +54,6 @@ public class CursoController {
 
     }
 
-    // Recebe o ID pela rota e o novo nome pelo parâmetro
     @PutMapping("/{id}")
     public ResponseEntity<Void> atualizar(
             @PathVariable Integer id,

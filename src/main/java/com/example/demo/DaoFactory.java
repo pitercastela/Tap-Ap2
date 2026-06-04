@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class DaoFactory {
-    public <Tipo extends CrudDao<?>> Tipo criarDao(Class<Tipo> classeDao){
+    public <Tipo> Tipo criarDao(Class<Tipo> classeDao){
         try{
             return classeDao.getDeclaredConstructor().newInstance();
         } catch (Exception e){

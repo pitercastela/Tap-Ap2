@@ -1,6 +1,8 @@
-package com.example.demo;
+package com.example.demo.Curso;
 
-import org.springframework.stereotype.Repository;
+import com.example.demo.Conexao;
+import com.example.demo.CrudDao;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +15,7 @@ public class CursoDao implements CrudDao<Curso> {
 
         Connection conn = Conexao.getInstanciaConexao();
 
-        try (PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, curso.getIdCurso());
             stmt.setString(2, curso.getNomeCurso());
             stmt.executeUpdate();

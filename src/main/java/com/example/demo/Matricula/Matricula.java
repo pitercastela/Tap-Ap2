@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.Matricula;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Curso {
-
-    private Integer idCurso;
-    private String nomeCurso;
+public class Matricula {
+    private Integer matriculaAluno;
+    private Integer idDisciplina;
 }
