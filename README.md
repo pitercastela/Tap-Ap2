@@ -1,9 +1,9 @@
 # API de Gestão Acadêmica - Spring Boot
 
 **Instituição:** IBMEC  
-**Disciplina:** Sistemas Operacionais (Código: IBM0791 - Turma: 8001)  
-**Semestre:** 2º Semestre de 2025  
-**Professor:** Luiz Fernando T. de Farias  
+**Disciplina:** Técnicas Avançadas de Programação (IBM3120)
+**Semestre:** 1º Semestre de 2026  
+**Professor:** Thiago Souza
 **Aluno:** Lucas Alves Castela Pereira  
 
 ---
