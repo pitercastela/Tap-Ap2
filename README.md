@@ -1,47 +1,33 @@
-# API de Gestão Acadêmica - Spring Boot
-
-**Instituição:** IBMEC  
-**Disciplina:** Técnicas Avançadas de Programação (IBM3120)  
-**Semestre:** 1º Semestre de 2026  
-**Professor:** Thiago Souza  
-**Aluno:** Lucas Alves Castela Pereira  
-
----
-
 ## 📌 Sobre o Projeto
-Este projeto é uma API RESTful desenvolvida em **Java com Spring Boot**, construída para gerenciar o escopo acadêmico de jogadors, selecoes, partidas e matrículas. 
+Este projeto é uma API RESTful desenvolvida em **Java com Spring Boot**, projetada para atender ao minimundo de "Gestão da Copa do Mundo" (FIFA World Cup). O sistema permite o gerenciamento completo de seleções, jogadores, partidas e o registro de participações.
 
-O diferencial arquitetural desta aplicação é a implementação **manual do acesso a dados via JDBC**, substituindo as abstrações do Spring Data JPA para demonstrar a aplicação prática e purista de conceitos de Engenharia de Software e **Design Patterns** (Singleton e Factory Method), conforme exigência acadêmica.
+O grande diferencial arquitetural desta aplicação é a implementação **manual e purista do acesso a dados via JDBC** (sem a utilização de frameworks de abstração como o Spring Data JPA). O objetivo central é demonstrar a aplicação prática de Engenharia de Software e **Design Patterns**, garantindo baixo acoplamento e alta coesão, conforme as exigências da disciplina.
 
 ## 🚀 Tecnologias e Infraestrutura
 * **Linguagem:** Java 17+
 * **Framework:** Spring Boot 3+
 * **Redução de Boilerplate:** Lombok
 * **Documentação:** SpringDoc OpenAPI (Swagger UI)
-* **Banco de Dados:** MySQL (Hospedado em nuvem via **Clever Cloud**)
-* **Deploy/Hospedagem:** **Render**
+* **Banco de Dados:** MySQL (Hospedado em nuvem via **Aiven**)
+* **Deploy/Hospedagem da API:** **Render**
 
 ## 📐 Arquitetura e Design Patterns Aplicados
 
-Para garantir o baixo acoplamento e a alta coesão, o sistema foi desenhado respeitando os princípios do S.O.L.I.D. e implementando os seguintes padrões de projeto:
+O projeto foi construído respeitando os princípios do **S.O.L.I.D.**, materializados através das seguintes técnicas:
 
-### 1. Singleton (Gerenciamento de Conexão)
-A classe `ConexaoSingleton` garante que toda a aplicação compartilhe uma única instância de `java.sql.Connection` com o banco de dados da Clever Cloud, evitando sobrecarga de conexões concorrentes e garantindo o controle centralizado do driver JDBC.
+### 1. Padrão Singleton (Gerenciamento de Conexão)
+A classe `ConexaoSingleton` garante uma única instância global de `java.sql.Connection`. Isso evita o esgotamento do *pool* de conexões do banco de dados na nuvem e centraliza o controle do *driver* JDBC e das credenciais (incluindo o rigoroso protocolo SSL exigido pelo Aiven).
 
-### 2. Factory Method com Reflection (Injeção Dinâmica de DAOs)
-Implementado através da classe `DaoFactory`. Em vez de os *Controllers* instanciarem os *Data Access Objects* (DAOs) diretamente, eles delegam essa responsabilidade à fábrica. 
-* A fábrica utiliza **Reflection** (`.getDeclaredConstructor().newInstance()`) para instanciar dinamicamente qualquer DAO solicitado.
-* Garante aderência ao **Open/Closed Principle (OCP)**: novas tabelas e DAOs podem ser adicionados ao sistema sem necessidade de alterar o código da fábrica.
+### 2. Factory Method com Java Reflection (Injeção Dinâmica)
+Implementado através da `DaoFactory`. A responsabilidade de instanciar os Data Access Objects (DAOs) foi removida dos *Controllers* e isolada em uma fábrica genérica que utiliza Reflection (`.getDeclaredConstructor().newInstance()`). Isso garante aderência ao **Open/Closed Principle (OCP)**: o sistema está fechado para modificações estruturais, mas aberto para a expansão de novas tabelas.
 
-## 🗄️ Estrutura do Banco de Dados
-O sistema utiliza um banco SQL relacional com as seguintes tabelas:
-* `selecoes` (1:N com jogadors)
-* `partidas` (N:M com jogadors)
-* `jogadors` (N:1 com selecoes)
-* `aluno_disciplina` (Tabela associativa / Matrículas)
+### 3. Padrão DAO e DTO
+Isolamento absoluto entre as regras de negócio HTTP (Controllers) e a linguagem SQL. Entidades de domínio possuem seus DAOs dedicados, enquanto tabelas associativas (N:M) retornam objetos mais leves de transferência de dados (DTOs), como o `ParticipacaoDTO`, evitando a construção de grafos de objetos desnecessariamente pesados.
 
-## 🌐 Endpoints e Documentação Interativa (Swagger)
+## 🗄️ Modelagem do Banco de Dados (Minimundo)
+A arquitetura relacional foi desenhada sem o uso de `AUTO_INCREMENT`, transferindo para a aplicação/usuário o controle absoluto das chaves de identificação (ideal para o mapeamento de códigos oficiais da FIFA).
 
-A API utiliza a passagem de dados via parâmetros de URL (`@RequestParam` e `@PathVariable`), padronizando o consumo das rotas.
-
-Você pode testar a aplicação em tempo real diretamente pela interface interativa do Swagger gerada automaticamente através do link incluído dentro do repositório.
+* **`selecoes`** (1:N com jogadores)
+* **`jogadores`** (N:1 com seleções)
+* **`partidas`** (N:M com seleções)
+* **`selecao_partida`** (Classe associativa / Tabela de Junção)
