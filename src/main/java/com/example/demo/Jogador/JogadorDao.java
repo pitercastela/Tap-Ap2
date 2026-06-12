@@ -127,4 +127,30 @@ public class JogadorDao implements CrudDao<Jogador> {
             throw new RuntimeException("Erro ao deletar jogador", e);
         }
     }
+
+    public List<Jogador> listarPorSelecao(Integer idSelecao) {
+        List<Jogador> jogadores = new ArrayList<>();
+        String sql = "SELECT * FROM jogadores WHERE id_selecao = ?";
+        Connection conn = Conexao.getInstanciaConexao();
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, idSelecao);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    jogadores.add(Jogador.builder()
+                            .idJogador(rs.getInt("id_jogador"))
+                            .nome(rs.getString("nome"))
+                            .numeroCamisa(rs.getInt("numero_camisa"))
+                            .posicao(rs.getString("posicao"))
+                            .idade(rs.getInt("idade"))
+                            .idSelecao((Integer) rs.getObject("id_selecao"))
+                            .build());
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao listar jogadores da seleção", e);
+        }
+        return jogadores;
+    }
 }

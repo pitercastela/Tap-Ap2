@@ -89,4 +89,15 @@ public class JogadorController {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
+
+    @GetMapping("/selecao/{idSelecao}")
+    public ResponseEntity<List<Jogador>> listarPorSelecao(@PathVariable Integer idSelecao) {
+        List<Jogador> jogadores = jogadorDao.listarPorSelecao(idSelecao);
+
+        if (jogadores.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(jogadores);
+    }
 }
