@@ -9,7 +9,7 @@
 ---
 
 ## 📌 Sobre o Projeto
-Este projeto é uma API RESTful desenvolvida em **Java com Spring Boot**, construída para gerenciar o escopo acadêmico de alunos, cursos, disciplinas e matrículas. 
+Este projeto é uma API RESTful desenvolvida em **Java com Spring Boot**, construída para gerenciar o escopo acadêmico de jogadors, selecoes, partidas e matrículas. 
 
 O diferencial arquitetural desta aplicação é a implementação **manual do acesso a dados via JDBC**, substituindo as abstrações do Spring Data JPA para demonstrar a aplicação prática e purista de conceitos de Engenharia de Software e **Design Patterns** (Singleton e Factory Method), conforme exigência acadêmica.
 
@@ -35,9 +35,9 @@ Implementado através da classe `DaoFactory`. Em vez de os *Controllers* instanc
 
 ## 🗄️ Estrutura do Banco de Dados
 O sistema utiliza um banco SQL relacional com as seguintes tabelas:
-* `cursos` (1:N com alunos)
-* `disciplinas` (N:M com alunos)
-* `alunos` (N:1 com cursos)
+* `selecoes` (1:N com jogadors)
+* `partidas` (N:M com jogadors)
+* `jogadors` (N:1 com selecoes)
 * `aluno_disciplina` (Tabela associativa / Matrículas)
 
 ## 🌐 Endpoints e Documentação Interativa (Swagger)
